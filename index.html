@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium Social - Ganhe Dinheiro Real</title>
+  <title>MakeMoney - Ganhe Dinheiro Real</title>
   <meta name="description" content="Ganhe dinheiro promovendo redes sociais. Clientes compram seguidores e engajamento, você executa tarefas e recebe pagamento.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%236366f1'/></svg>">
   <style>
@@ -333,7 +333,7 @@
   <!-- Client Login -->
   <div id="pClientLoginModal" class="p-modal hidden">
     <div class="p-modal-content">
-      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <button class="p-modal-close" onclick="mkApp.closeAllModals()">&times;</button>
       <h3>👨‍💼 Login Cliente</h3>
       <form id="clientLoginForm">
         <div class="p-form-group">
@@ -345,7 +345,7 @@
           <input class="p-input" id="clientPassword" type="password" placeholder="••••••••" required>
         </div>
         <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Entrar</button>
-        <div class="p-register-link" onclick="pApp.showClientRegister()">Não tem conta? Cadastre-se</div>
+        <div class="p-register-link" onclick="mkApp.showClientRegister()">Não tem conta? Cadastre-se</div>
       </form>
     </div>
   </div>
@@ -353,7 +353,7 @@
   <!-- Client Register -->
   <div id="pClientRegisterModal" class="p-modal hidden">
     <div class="p-modal-content">
-      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <button class="p-modal-close" onclick="mkApp.closeAllModals()">&times;</button>
       <h3>📝 Cadastro Cliente</h3>
       <form id="clientRegisterForm">
         <div class="p-form-group">
@@ -366,7 +366,7 @@
           <div id="clientRegPasswordStrength" class="p-password-strength"></div>
         </div>
         <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Criar Conta</button>
-        <div class="p-register-link" onclick="pApp.showClientLogin()">Já tem conta? Faça login</div>
+        <div class="p-register-link" onclick="mkApp.showClientLogin()">Já tem conta? Faça login</div>
       </form>
     </div>
   </div>
@@ -374,7 +374,7 @@
   <!-- User Login -->
   <div id="pUserLoginModal" class="p-modal hidden">
     <div class="p-modal-content">
-      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <button class="p-modal-close" onclick="mkApp.closeAllModals()">&times;</button>
       <h3>👤 Login Usuário</h3>
       <form id="userLoginForm">
         <div class="p-form-group">
@@ -386,7 +386,7 @@
           <input class="p-input" id="userPassword" type="password" placeholder="••••••••" required>
         </div>
         <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Entrar</button>
-        <div class="p-register-link" onclick="pApp.showUserRegister()">Ganhe dinheiro agora! Cadastre-se</div>
+        <div class="p-register-link" onclick="mkApp.showUserRegister()">Ganhe dinheiro agora! Cadastre-se</div>
       </form>
     </div>
   </div>
@@ -394,7 +394,7 @@
   <!-- User Register -->
   <div id="pUserRegisterModal" class="p-modal hidden">
     <div class="p-modal-content">
-      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <button class="p-modal-close" onclick="mkApp.closeAllModals()">&times;</button>
       <h3>💰 Cadastro Usuário</h3>
       <form id="userRegisterForm">
         <div class="p-form-group">
@@ -407,7 +407,7 @@
           <div id="userRegPasswordStrength" class="p-password-strength"></div>
         </div>
         <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Começar a Ganhar</button>
-        <div class="p-register-link" onclick="pApp.showUserLogin()">Já tem conta? Faça login</div>
+        <div class="p-register-link" onclick="mkApp.showUserLogin()">Já tem conta? Faça login</div>
       </form>
     </div>
   </div>
@@ -415,7 +415,7 @@
   <!-- Admin Login Modal -->
   <div id="pAdminLoginModal" class="p-modal hidden">
     <div class="p-modal-content">
-      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <button class="p-modal-close" onclick="mkApp.closeAllModals()">&times;</button>
       <h3>⚙️ Login Admin</h3>
       <form id="adminLoginForm">
         <div class="p-form-group">
@@ -434,19 +434,22 @@
   <!-- Landing Page -->
   <div id="pLanding" class="p-landing">
     <div class="p-hero">
-      <h1>Premium Social</h1>
+      <h1>MakeMoney</h1>
       <p>A maior plataforma de engajamento social de Angola. Ganhe dinheiro real executando tarefas simples ou impulsione suas redes sociais.</p>
       <div class="p-hero-buttons">
-        <button class="p-btn p-btn-primary" onclick="pApp.showUserLogin()">Quero Ganhar Dinheiro</button>
-        <button class="p-btn p-btn-secondary" onclick="pApp.showClientLogin()">Quero Comprar Seguidores</button>
-     
+        <button class="p-btn p-btn-primary" onclick="mkApp.showUserLogin()">Quero Ganhar Dinheiro</button>
+        <button class="p-btn p-btn-secondary" onclick="mkApp.showClientLogin()">Quero Comprar Seguidores</button>
+      </div>
+      <div style="margin-top: 20px; opacity: 0.5; cursor: pointer;" onclick="mkApp.showAdminLogin()">Acesso Administrativo</div>
+    </div>
+
     <div class="p-access-grid">
-      <div class="p-access-card" onclick="pApp.showUserLogin()">
+      <div class="p-access-card" onclick="mkApp.showUserLogin()">
         <div class="p-access-icon">💸</div>
         <h3>Para Usuários</h3>
         <p>Curta, siga e comente em perfis reais e receba pagamentos instantâneos via IBAN ou Multicaixa Express.</p>
       </div>
-      <div class="p-access-card" onclick="pApp.showClientLogin()">
+      <div class="p-access-card" onclick="mkApp.showClientLogin()">
         <div class="p-access-icon">🚀</div>
         <h3>Para Clientes</h3>
         <p>Aumente sua autoridade digital com seguidores, curtidas e visualizações reais e segmentadas.</p>
@@ -465,7 +468,7 @@
           <div id="pClientSessionInfo" class="p-session-info"></div>
         </div>
         <div>
-          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Sair</button>
+          <button class="p-btn p-btn-secondary" onclick="mkApp.logout()" style="margin-right: 12px;">← Sair</button>
           <div class="p-balance">
             <div style="font-size: 1rem; opacity: 0.8;">Saldo para Campanhas</div>
             <div id="pClientBalance">0 AOA</div>
@@ -535,7 +538,7 @@
           <div id="pUserSessionInfo" class="p-session-info"></div>
         </div>
         <div>
-          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Sair</button>
+          <button class="p-btn p-btn-secondary" onclick="mkApp.logout()" style="margin-right: 12px;">← Sair</button>
           <div class="p-balance">
             <div style="font-size: 1rem; opacity: 0.8;">Saldo Disponível</div>
             <div id="pUserBalance">0 AOA</div>
@@ -554,7 +557,7 @@
       </div>
 
       <div class="p-card">
-        <button class="p-btn p-btn-success" onclick="pApp.requestWithdraw()" style="width: 100%;">💳 Solicitar Saque</button>
+        <button class="p-btn p-btn-success" onclick="mkApp.requestWithdraw()" style="width: 100%;">💳 Solicitar Saque</button>
       </div>
     </div>
 
@@ -566,7 +569,7 @@
           <div style="font-size: 1.1rem; opacity: 0.8;">Gerencie toda a plataforma</div>
         </div>
         <div>
-          <button class="p-btn p-btn-secondary" onclick="pApp.logout()">← Sair</button>
+          <button class="p-btn p-btn-secondary" onclick="mkApp.logout()">← Sair</button>
         </div>
       </div>
 
@@ -576,6 +579,10 @@
           <div class="p-list" id="pAdminClients"></div>
         </div>
         <div class="p-card">
+          <h3>👤 Usuários (Trabalhadores)</h3>
+          <div class="p-list" id="pAdminUsers"></div>
+        </div>
+        <div class="p-card">
           <h3>📊 Estatísticas</h3>
           <div style="font-size: 1.5rem; font-weight: 800; color: var(--p-success);">
             Total Receita: <span id="pAdminTotalRevenue">0 AOA</span>
@@ -583,7 +590,7 @@
           <div style="margin-top: 24px;">
             <div>Campanhas Ativas: <span id="pAdminActiveCampaigns">0</span></div>
             <div>Tarefas Pendentes: <span id="pAdminPendingTasks">0</span></div>
-            <div>Usuários: <span id="pAdminTotalUsers">0</span></div>
+            <div>Total Usuários: <span id="pAdminTotalUsersCount">0</span></div>
           </div>
         </div>
       </div>
@@ -606,9 +613,9 @@
   </div>
 
   <script>
-    class PremiumSocialApp {
+    class MakeMoneyApp {
       constructor() {
-        this.data = JSON.parse(localStorage.getItem('premiumSocialData')) || {
+        this.data = JSON.parse(localStorage.getItem('makeMoneyData')) || {
           users: [],
           clients: [],
           campaigns: [],
@@ -676,14 +683,16 @@
       }
 
       checkSession() {
-        const session = JSON.parse(localStorage.getItem('premiumSocialSession'));
+        const session = JSON.parse(localStorage.getItem('makeMoneySession'));
         if (session) {
           if (session.type === 'user') {
             this.currentUser = this.data.users.find(u => u.id === session.id);
             if (this.currentUser) this.showArea('pUserArea');
+            else this.logout();
           } else if (session.type === 'client') {
             this.currentClient = this.data.clients.find(c => c.id === session.id);
             if (this.currentClient) this.showArea('pClientArea');
+            else this.logout();
           } else if (session.type === 'admin') {
             this.isAdmin = true;
             this.showArea('pAdminArea');
@@ -730,7 +739,7 @@
         
         if (email === this.data.admin.email && password === this.data.admin.password) {
           this.isAdmin = true;
-          localStorage.setItem('premiumSocialSession', JSON.stringify({ type: 'admin' }));
+          localStorage.setItem('makeMoneySession', JSON.stringify({ type: 'admin' }));
           this.showArea('pAdminArea');
           this.showToast('Admin logado com sucesso!', 'success');
           this.closeAllModals();
@@ -746,7 +755,7 @@
         const client = this.data.clients.find(c => c.email === email && c.password === password);
         if (client) {
           this.currentClient = client;
-          localStorage.setItem('premiumSocialSession', JSON.stringify({ type: 'client', id: client.id }));
+          localStorage.setItem('makeMoneySession', JSON.stringify({ type: 'client', id: client.id }));
           this.showArea('pClientArea');
           this.updateClientDisplay();
           this.closeAllModals();
@@ -787,7 +796,7 @@
         const user = this.data.users.find(u => u.email === email && u.password === password);
         if (user) {
           this.currentUser = user;
-          localStorage.setItem('premiumSocialSession', JSON.stringify({ type: 'user', id: user.id }));
+          localStorage.setItem('makeMoneySession', JSON.stringify({ type: 'user', id: user.id }));
           this.showArea('pUserArea');
           this.updateUserDisplay();
           this.closeAllModals();
@@ -869,7 +878,8 @@
             reward: Math.floor(quantity / 100) * 25,
             status: 'available',
             assignedUser: null,
-            proof: null
+            proof: null,
+            approved: false
           });
         }
 
@@ -938,7 +948,7 @@
               ${task.quantity} ações • Recompensa: <strong>${task.reward} AOA</strong><br>
               <small>${task.link}</small>
             </div>
-            <button class="p-btn p-btn-success" onclick="pApp.acceptTask(${task.id})" style="padding: 12px 24px;">
+            <button class="p-btn p-btn-success" onclick="mkApp.acceptTask(${task.id})" style="padding: 12px 24px;">
               ✅ Aceitar
             </button>
           </div>
@@ -969,7 +979,7 @@
 
       requestWithdraw() {
         if (this.currentUser.balance >= 500) {
-          this.showToast('Saque solicitado! Processado em 24h ou menos de 24h.', 'success');
+          this.showToast('Saque solicitado! Processado em 24h.', 'success');
           this.currentUser.balance = 0;
           this.saveData();
           this.updateUserDisplay();
@@ -985,51 +995,65 @@
       }
 
       renderAdminDisplay() {
-        document.getElementById('pAdminTotalRevenue').textContent = 
-          this.data.payments.reduce((sum, p) => sum + p.amount, 0).toLocaleString() + ' AOA';
-        document.getElementById('pAdminActiveCampaigns').textContent = 
-          this.data.campaigns.filter(c => c.status === 'active').length;
-        document.getElementById('pAdminPendingTasks').textContent = 
-          this.data.tasks.filter(t => t.status === 'completed' && !t.approved).length;
-        document.getElementById('pAdminTotalUsers').textContent = this.data.users.length;
+        // Stats
+        const totalRevenue = this.data.campaigns.reduce((sum, c) => sum + c.price, 0);
+        document.getElementById('pAdminTotalRevenue').textContent = totalRevenue.toLocaleString() + ' AOA';
+        document.getElementById('pAdminActiveCampaigns').textContent = this.data.campaigns.filter(c => c.status === 'active').length;
+        document.getElementById('pAdminPendingTasks').textContent = this.data.tasks.filter(t => t.status === 'active').length;
+        document.getElementById('pAdminTotalUsersCount').textContent = this.data.users.length;
         
         this.renderAdminClients();
+        this.renderAdminUsers();
         this.renderAdminPending();
       }
 
       renderAdminClients() {
         const html = this.data.clients.map(client => `
           <div class="p-list-item">
-            <div>${client.name} (${client.email})</div>
+            <div><strong>${client.name}</strong><br><small>${client.email}</small></div>
             <div>${client.balance.toLocaleString()} AOA</div>
           </div>
         `).join('');
-        document.getElementById('pAdminClients').innerHTML = html || '<div>Nenhum cliente</div>';
+        document.getElementById('pAdminClients').innerHTML = html || '<div style="opacity:0.5;padding:20px;">Nenhum cliente cadastrado</div>';
+      }
+
+      renderAdminUsers() {
+        const html = this.data.users.map(user => `
+          <div class="p-list-item">
+            <div><strong>${user.name}</strong><br><small>${user.email}</small></div>
+            <div>${user.balance.toLocaleString()} AOA</div>
+          </div>
+        `).join('');
+        document.getElementById('pAdminUsers').innerHTML = html || '<div style="opacity:0.5;padding:20px;">Nenhum usuário cadastrado</div>';
       }
 
       renderAdminPending() {
-        const pending = this.data.tasks.filter(t => t.status === 'completed' && !t.approved);
+        const pending = this.data.tasks.filter(t => t.status === 'active');
         document.getElementById('pAdminPendingApprovals').innerHTML = pending.map(t => {
           const user = this.data.users.find(u => u.id === t.assignedUser);
           return `
             <tr>
               <td>${user ? user.name : 'N/A'}</td>
-              <td>${t.platform} - ${t.quantity}</td>
-              <td>${t.proof || 'Sem prova'}</td>
+              <td>${t.platform.toUpperCase()} - ${t.type}</td>
+              <td>${t.proof || 'Aguardando envio'}</td>
               <td>
-                <button class="p-btn p-btn-success" onclick="pApp.approveTask(${t.id})" style="padding:8px 16px;font-size:0.8rem;">✅ Aprovar</button>
+                <button class="p-btn p-btn-success" onclick="mkApp.approveTask(${t.id})" style="padding:8px 16px;font-size:0.8rem;">✅ Aprovar</button>
               </td>
             </tr>
           `;
-        }).join('') || '<tr><td colspan="4">Nenhuma tarefa pendente</td></tr>';
+        }).join('') || '<tr><td colspan="4" style="text-align:center;opacity:0.5;padding:20px;">Nenhuma tarefa pendente de aprovação</td></tr>';
       }
 
       approveTask(taskId) {
         const task = this.data.tasks.find(t => t.id === taskId);
         if (task) {
+          task.status = 'completed';
           task.approved = true;
           const user = this.data.users.find(u => u.id === task.assignedUser);
-          if (user) user.balance += task.reward;
+          if (user) {
+            user.balance += task.reward;
+            user.tasksCompleted = (user.tasksCompleted || 0) + 1;
+          }
           this.saveData();
           this.updateDisplays();
           this.showToast('Tarefa aprovada e pagamento liberado!', 'success');
@@ -1065,13 +1089,13 @@
         this.currentUser = null;
         this.currentClient = null;
         this.isAdmin = false;
-        localStorage.removeItem('premiumSocialSession');
+        localStorage.removeItem('makeMoneySession');
         this.showLanding();
         this.showToast('Sessão encerrada.', 'info');
       }
 
       saveData() {
-        localStorage.setItem('premiumSocialData', JSON.stringify(this.data));
+        localStorage.setItem('makeMoneyData', JSON.stringify(this.data));
       }
 
       showToast(message, type = 'success') {
@@ -1092,12 +1116,7 @@
       }
     }
 
-    const pApp = new PremiumSocialApp();
+    const mkApp = new MakeMoneyApp();
   </script>
-       </div>
-      <div style="margin-top: 20px; opacity: 0.5; cursor: pointer;" onclick="pApp.showAdminLogin()">Acesso Administrativo</div>
-    </div>
 </body>
 </html>
-
-
