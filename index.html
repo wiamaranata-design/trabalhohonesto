@@ -420,11 +420,11 @@
       <form id="adminLoginForm">
         <div class="p-form-group">
           <label class="p-label">Email Admin</label>
-          <input class="p-input" id="adminEmail" type="email" placeholder="servicos.ivanlima@gmail.com" required>
+          <input class="p-input" id="adminEmail" type="email" placeholder="admin@makemoney.com" required>
         </div>
         <div class="p-form-group">
           <label class="p-label">Senha</label>
-          <input class="p-input" id="adminPassword" type="password" placeholder="@Angola1975#" required>
+          <input class="p-input" id="adminPassword" type="password" placeholder="••••••••" required>
         </div>
         <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Acessar Painel</button>
       </form>
@@ -439,10 +439,7 @@
       <div class="p-hero-buttons">
         <button class="p-btn p-btn-primary" onclick="pApp.showUserLogin()">Quero Ganhar Dinheiro</button>
         <button class="p-btn p-btn-secondary" onclick="pApp.showClientLogin()">Quero Comprar Seguidores</button>
-      </div>
-      <div style="margin-top: 20px; opacity: 0.5; cursor: pointer;" onclick="pApp.showAdminLogin()">Acesso Administrativo</div>
-    </div>
-
+     
     <div class="p-access-grid">
       <div class="p-access-card" onclick="pApp.showUserLogin()">
         <div class="p-access-icon">💸</div>
@@ -972,7 +969,7 @@
 
       requestWithdraw() {
         if (this.currentUser.balance >= 500) {
-          this.showToast('Saque solicitado! Processado em 24h.', 'success');
+          this.showToast('Saque solicitado! Processado em 24h ou menos de 24h.', 'success');
           this.currentUser.balance = 0;
           this.saveData();
           this.updateUserDisplay();
@@ -1097,6 +1094,10 @@
 
     const pApp = new PremiumSocialApp();
   </script>
+       </div>
+      <div style="margin-top: 20px; opacity: 0.5; cursor: pointer;" onclick="pApp.showAdminLogin()">Acesso Administrativo</div>
+    </div>
 </body>
 </html>
+
 
