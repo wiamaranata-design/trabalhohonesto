@@ -79,7 +79,21 @@
       max-width: 420px;
       border: 1px solid rgba(255,255,255,0.1);
       backdrop-filter: blur(20px);
+      position: relative;
     }
+    .p-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--p-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+    .p-modal-close:hover { opacity: 1; }
     .p-modal h3 { text-align: center; margin-bottom: 32px; font-size: 1.8rem; }
     .p-register-link {
       text-align: center;
@@ -113,8 +127,7 @@
       margin-right: auto;
       line-height: 1.6;
     }
-    .p-hero-buttons
-.p-hero-buttons {
+    .p-hero-buttons {
       display: flex;
       gap: 20px;
       justify-content: center;
@@ -213,6 +226,7 @@
       border-radius: 2px;
       margin-top: 8px;
       transition: all 0.3s;
+      background: rgba(255,255,255,0.1);
     }
     .p-password-weak { background: var(--p-error); width: 25%; }
     .p-password-medium { background: var(--p-warning); width: 50%; }
@@ -317,8 +331,9 @@
 
   <!-- Login Modals -->
   <!-- Client Login -->
-  <div id="pClientLoginModal" class="p-modal">
+  <div id="pClientLoginModal" class="p-modal hidden">
     <div class="p-modal-content">
+      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
       <h3>👨‍💼 Login Cliente</h3>
       <form id="clientLoginForm">
         <div class="p-form-group">
@@ -328,18 +343,18 @@
         <div class="p-form-group">
           <label class="p-label">Senha</label>
           <input class="p-input" id="clientPassword" type="password" placeholder="••••••••" required>
-          <div class="p-password-strength" id="clientPasswordStrength"></div>
         </div>
         <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Entrar</button>
+        <div class="p-register-link" onclick="pApp.showClientRegister()">Não tem conta? Cadastre-se</div>
       </form>
-      <div class="p-register-link" onclick="pApp.showClientRegister()">Não tem conta? <strong>Criar conta</strong></div>
     </div>
   </div>
 
   <!-- Client Register -->
   <div id="pClientRegisterModal" class="p-modal hidden">
     <div class="p-modal-content">
-      <h3>👨‍💼 Criar Conta Cliente</h3>
+      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <h3>📝 Cadastro Cliente</h3>
       <form id="clientRegisterForm">
         <div class="p-form-group">
           <label class="p-label">Email</label>
@@ -347,18 +362,19 @@
         </div>
         <div class="p-form-group">
           <label class="p-label">Senha</label>
-          <input class="p-input" id="clientRegPassword" type="password" placeholder="••••••••" required minlength="6">
-          <div class="p-password-strength" id="clientRegPasswordStrength"></div>
+          <input class="p-input" id="clientRegPassword" type="password" placeholder="••••••••" required>
+          <div id="clientRegPasswordStrength" class="p-password-strength"></div>
         </div>
-        <button type="submit" class="p-btn p-btn-success" style="width: 100%;">Criar Conta</button>
+        <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Criar Conta</button>
+        <div class="p-register-link" onclick="pApp.showClientLogin()">Já tem conta? Faça login</div>
       </form>
-      <div class="p-register-link" onclick="pApp.showClientLogin()">Já tem conta? <strong>Fazer login</strong></div>
     </div>
   </div>
 
   <!-- User Login -->
-  <div id="pUserLoginModal" class="p-modal">
+  <div id="pUserLoginModal" class="p-modal hidden">
     <div class="p-modal-content">
+      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
       <h3>👤 Login Usuário</h3>
       <form id="userLoginForm">
         <div class="p-form-group">
@@ -368,18 +384,18 @@
         <div class="p-form-group">
           <label class="p-label">Senha</label>
           <input class="p-input" id="userPassword" type="password" placeholder="••••••••" required>
-          <div class="p-password-strength" id="userPasswordStrength"></div>
         </div>
         <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Entrar</button>
+        <div class="p-register-link" onclick="pApp.showUserRegister()">Ganhe dinheiro agora! Cadastre-se</div>
       </form>
-      <div class="p-register-link" onclick="pApp.showUserRegister()">Não tem conta? <strong>Criar conta</strong></div>
     </div>
   </div>
 
   <!-- User Register -->
   <div id="pUserRegisterModal" class="p-modal hidden">
     <div class="p-modal-content">
-      <h3>👤 Criar Conta Usuário</h3>
+      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <h3>💰 Cadastro Usuário</h3>
       <form id="userRegisterForm">
         <div class="p-form-group">
           <label class="p-label">Email</label>
@@ -387,115 +403,117 @@
         </div>
         <div class="p-form-group">
           <label class="p-label">Senha</label>
-          <input class="p-input" id="userRegPassword" type="password" placeholder="••••••••" required minlength="6">
-          <div class="p-password-strength" id="userRegPasswordStrength"></div>
+          <input class="p-input" id="userRegPassword" type="password" placeholder="••••••••" required>
+          <div id="userRegPasswordStrength" class="p-password-strength"></div>
         </div>
-        <button type="submit" class="p-btn p-btn-success" style="width: 100%;">Criar Conta</button>
+        <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Começar a Ganhar</button>
+        <div class="p-register-link" onclick="pApp.showUserLogin()">Já tem conta? Faça login</div>
       </form>
-      <div class="p-register-link" onclick="pApp.showUserLogin()">Já tem conta? <strong>Fazer login</strong></div>
+    </div>
+  </div>
+
+  <!-- Admin Login Modal -->
+  <div id="pAdminLoginModal" class="p-modal hidden">
+    <div class="p-modal-content">
+      <button class="p-modal-close" onclick="pApp.closeAllModals()">&times;</button>
+      <h3>⚙️ Login Admin</h3>
+      <form id="adminLoginForm">
+        <div class="p-form-group">
+          <label class="p-label">Email Admin</label>
+          <input class="p-input" id="adminEmail" type="email" placeholder="admin@premium.com" required>
+        </div>
+        <div class="p-form-group">
+          <label class="p-label">Senha</label>
+          <input class="p-input" id="adminPassword" type="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Acessar Painel</button>
+      </form>
     </div>
   </div>
 
   <!-- Landing Page -->
-  <div class="p-landing" id="pLanding">
-    <section class="p-hero">
-      <h1>💎 Premium Social</h1>
-      <p><strong>Ganhe dinheiro real</strong> promovendo redes sociais. Clientes compram seguidores e engajamento, você executa as tarefas e recebe <strong>pagamento imediato</strong>.</p>
-      
+  <div id="pLanding" class="p-landing">
+    <div class="p-hero">
+      <h1>Premium Social</h1>
+      <p>A maior plataforma de engajamento social de Angola. Ganhe dinheiro real executando tarefas simples ou impulsione suas redes sociais.</p>
       <div class="p-hero-buttons">
-        <button class="p-btn p-btn-primary" onclick="pApp.showClientLogin()">
-          👨‍💼 Área Cliente
-        </button>
-        <button class="p-btn p-btn-success" onclick="pApp.showUserLogin()">
-          👤 Área Usuário (Ganhe $)
-        </button>
-        <a href="#admin" class="p-btn p-btn-secondary" onclick="pApp.showAdminLogin()">
-          ⚙️ Administração
-        </a>
+        <button class="p-btn p-btn-primary" onclick="pApp.showUserLogin()">Quero Ganhar Dinheiro</button>
+        <button class="p-btn p-btn-secondary" onclick="pApp.showClientLogin()">Quero Comprar Seguidores</button>
       </div>
-
-      <div style="opacity: 0.7; font-size: 0.95rem;">
-        Plataforma 100% funcional • Dados salvos localmente • Teste agora mesmo!
-      </div>
-    </section>
+      <div style="margin-top: 20px; opacity: 0.5; cursor: pointer;" onclick="pApp.showAdminLogin()">Acesso Administrativo</div>
+    </div>
 
     <div class="p-access-grid">
-      <div class="p-access-card" onclick="pApp.showClientLogin()">
-        <div class="p-access-icon">👨‍💼</div>
-        <h3>Área Cliente</h3>
-        <p>Crie campanhas profissionais de <strong>seguidores e engajamento</strong> para Facebook, Instagram, YouTube e TikTok com preços automáticos.</p>
-      </div>
-      
       <div class="p-access-card" onclick="pApp.showUserLogin()">
-        <div class="p-access-icon">💰</div>
-        <h3>Área Usuário</h3>
-        <p>Execute tarefas simples e <strong>ganhe 25-50 AOA por ação</strong>. Saldo disponível para saque imediato após aprovação.</p>
+        <div class="p-access-icon">💸</div>
+        <h3>Para Usuários</h3>
+        <p>Curta, siga e comente em perfis reais e receba pagamentos instantâneos via IBAN ou Multicaixa Express.</p>
       </div>
-      
-      <div class="p-access-card" onclick="pApp.showAdminLogin()">
-        <div class="p-access-icon">⚙️</div>
-        <h3>Administração</h3>
-        <p>Gerencie clientes, aprove tarefas concluídas e acompanhe <strong>estatísticas em tempo real</strong>.</p>
+      <div class="p-access-card" onclick="pApp.showClientLogin()">
+        <div class="p-access-icon">🚀</div>
+        <h3>Para Clientes</h3>
+        <p>Aumente sua autoridade digital com seguidores, curtidas e visualizações reais e segmentadas.</p>
       </div>
     </div>
   </div>
 
   <!-- App Container -->
-  <div class="p-app-container" id="pAppContainer">
+  <div id="pAppContainer" class="p-app-container">
     <!-- Client Area -->
     <div id="pClientArea" style="display: none;">
       <div class="p-header">
         <div>
-          <h2>👨‍💼 Área Cliente</h2>
+          <h2>👨‍💼 Área do Cliente</h2>
           <div id="pClientName"></div>
           <div id="pClientSessionInfo" class="p-session-info"></div>
         </div>
         <div>
-          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Voltar</button>
+          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Sair</button>
           <div class="p-balance">
-            <div style="font-size: 1rem; opacity: 0.8;">Saldo</div>
+            <div style="font-size: 1rem; opacity: 0.8;">Saldo para Campanhas</div>
             <div id="pClientBalance">0 AOA</div>
           </div>
         </div>
       </div>
 
       <div class="p-card">
-        <h3>📈 Criar Nova Campanha</h3>
-        <form class="p-form-grid" id="campaignForm">
-          <div class="p-form-group">
-            <label class="p-label">Plataforma</label>
-            <select class="p-select" id="pCampaignPlatform" required>
-              <option value="">Selecione...</option>
-              <option value="facebook">📘 Facebook</option>
-              <option value="instagram">📷 Instagram</option>
-              <option value="youtube">📺 YouTube</option>
-              <option value="tiktok">🎵 TikTok</option>
-            </select>
+        <h3>🚀 Criar Nova Campanha</h3>
+        <form id="campaignForm">
+          <div class="p-form-grid">
+            <div class="p-form-group">
+              <label class="p-label">Plataforma</label>
+              <select class="p-select" id="pCampaignPlatform">
+                <option value="facebook">Facebook</option>
+                <option value="instagram">Instagram</option>
+                <option value="youtube">YouTube</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+            </div>
+            <div class="p-form-group">
+              <label class="p-label">Tipo de Serviço</label>
+              <select class="p-select" id="pCampaignType">
+                <option value="seguidores">Seguidores</option>
+                <option value="curtidas">Curtidas</option>
+                <option value="comentarios">Comentários</option>
+              </select>
+            </div>
+            <div class="p-form-group">
+              <label class="p-label">Quantidade</label>
+              <input class="p-input" id="pCampaignQuantity" type="number" min="100" step="100" value="100">
+            </div>
+            <div class="p-form-group">
+              <label class="p-label">Velocidade</label>
+              <select class="p-select" id="pCampaignSpeed">
+                <option value="normal">Normal</option>
+                <option value="rapido">Rápido</option>
+              </select>
+            </div>
           </div>
-          <div class="p-form-group">
-            <label class="p-label">Tipo</label>
-            <select class="p-select" id="pCampaignType" required>
-              <option value="seguidores">👥 Seguidores</option>
-              <option value="engajamento">❤️ Engajamento</option>
-            </select
-</div>
           <div class="p-form-group">
             <label class="p-label">Link do Perfil/Post</label>
             <input class="p-input" id="pCampaignLink" type="url" placeholder="https://..." required>
           </div>
-          <div class="p-form-group">
-            <label class="p-label">Quantidade</label>
-            <input class="p-input" id="pCampaignQuantity" type="number" min="100" max="50000" placeholder="1000" required>
-          </div>
-          <div class="p-form-group">
-            <label class="p-label">Velocidade</label>
-            <select class="p-select" id="pCampaignSpeed" required>
-              <option value="lenta">🐌 Lenta (24h)</option>
-              <option value="normal">⚡ Normal (12h)</option>
-              <option value="rapida">🚀 Rápida (6h)</option>
-            </select>
-          </div>
-          <button type="submit" class="p-btn p-btn-primary" style="grid-column: 1 / -1;">📤 Criar Campanha</button>
+          <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Lançar Campanha</button>
         </form>
       </div>
 
@@ -520,7 +538,7 @@
           <div id="pUserSessionInfo" class="p-session-info"></div>
         </div>
         <div>
-          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Voltar</button>
+          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Sair</button>
           <div class="p-balance">
             <div style="font-size: 1rem; opacity: 0.8;">Saldo Disponível</div>
             <div id="pUserBalance">0 AOA</div>
@@ -609,12 +627,12 @@
 
       init() {
         this.bindEvents();
+        this.checkSession();
         this.updateDisplays();
-        this.showLanding();
       }
 
       bindEvents() {
-        // Client Login
+        // Client Login/Register
         document.getElementById('clientLoginForm').addEventListener('submit', (e) => {
           e.preventDefault();
           this.handleClientLogin();
@@ -624,7 +642,7 @@
           this.handleClientRegister();
         });
 
-        // User Login
+        // User Login/Register
         document.getElementById('userLoginForm').addEventListener('submit', (e) => {
           e.preventDefault();
           this.handleUserLogin();
@@ -634,6 +652,12 @@
           this.handleUserRegister();
         });
 
+        // Admin Login
+        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.handleAdminLogin();
+        });
+
         // Campaign Form
         document.getElementById('campaignForm').addEventListener('submit', (e) => {
           e.preventDefault();
@@ -641,46 +665,80 @@
         });
 
         // Password strength listeners
-        ['clientPassword', 'userPassword', 'clientRegPassword', 'userRegPassword'].forEach(id => {
-          document.getElementById(id).addEventListener('input', (e) => this.updatePasswordStrength(e.target));
+        ['clientRegPassword', 'userRegPassword'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.addEventListener('input', (e) => this.updatePasswordStrength(e.target));
+          }
         });
+
+        // Close modals on ESC key
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') this.closeAllModals();
+        });
+      }
+
+      checkSession() {
+        const session = JSON.parse(localStorage.getItem('premiumSocialSession'));
+        if (session) {
+          if (session.type === 'user') {
+            this.currentUser = this.data.users.find(u => u.id === session.id);
+            if (this.currentUser) this.showArea('pUserArea');
+          } else if (session.type === 'client') {
+            this.currentClient = this.data.clients.find(c => c.id === session.id);
+            if (this.currentClient) this.showArea('pClientArea');
+          } else if (session.type === 'admin') {
+            this.isAdmin = true;
+            this.showArea('pAdminArea');
+          }
+        } else {
+          this.showLanding();
+        }
       }
 
       showLanding() {
         document.getElementById('pLanding').style.display = 'block';
         document.getElementById('pAppContainer').style.display = 'none';
-        document.querySelectorAll('.p-modal').forEach(m => m.classList.add('hidden'));
+        this.closeAllModals();
       }
 
       showClientLogin() {
+        this.closeAllModals();
         document.getElementById('pClientLoginModal').classList.remove('hidden');
-        document.getElementById('pLanding').style.display = 'none';
       }
 
       showClientRegister() {
-        document.getElementById('pClientLoginModal').classList.add('hidden');
+        this.closeAllModals();
         document.getElementById('pClientRegisterModal').classList.remove('hidden');
       }
 
       showUserLogin() {
+        this.closeAllModals();
         document.getElementById('pUserLoginModal').classList.remove('hidden');
-        document.getElementById('pLanding').style.display = 'none';
       }
 
       showUserRegister() {
-        document.getElementById('pUserLoginModal').classList.add('hidden');
+        this.closeAllModals();
         document.getElementById('pUserRegisterModal').classList.remove('hidden');
       }
 
       showAdminLogin() {
-        const email = prompt('Email Admin:');
-        const password = prompt('Senha Admin:');
+        this.closeAllModals();
+        document.getElementById('pAdminLoginModal').classList.remove('hidden');
+      }
+
+      handleAdminLogin() {
+        const email = document.getElementById('adminEmail').value;
+        const password = document.getElementById('adminPassword').value;
+        
         if (email === this.data.admin.email && password === this.data.admin.password) {
           this.isAdmin = true;
+          localStorage.setItem('premiumSocialSession', JSON.stringify({ type: 'admin' }));
           this.showArea('pAdminArea');
           this.showToast('Admin logado com sucesso!', 'success');
+          this.closeAllModals();
         } else {
-          this.showToast('Credenciais inválidas!', 'error');
+          this.showToast('Credenciais de administrador inválidas!', 'error');
         }
       }
 
@@ -691,6 +749,7 @@
         const client = this.data.clients.find(c => c.email === email && c.password === password);
         if (client) {
           this.currentClient = client;
+          localStorage.setItem('premiumSocialSession', JSON.stringify({ type: 'client', id: client.id }));
           this.showArea('pClientArea');
           this.updateClientDisplay();
           this.closeAllModals();
@@ -731,6 +790,7 @@
         const user = this.data.users.find(u => u.email === email && u.password === password);
         if (user) {
           this.currentUser = user;
+          localStorage.setItem('premiumSocialSession', JSON.stringify({ type: 'user', id: user.id }));
           this.showArea('pUserArea');
           this.updateUserDisplay();
           this.closeAllModals();
@@ -795,14 +855,12 @@
           speed,
           status: 'active',
           price: totalPrice,
-          createdAt: new Date().toLocaleString('pt-BR')
+          createdAt: new Date().toLocaleDateString()
         };
 
-        // Deduct balance
         this.currentClient.balance -= totalPrice;
         this.data.campaigns.push(campaign);
         
-        // Create tasks for users
         for (let i = 0; i < quantity; i += 100) {
           this.data.tasks.push({
             id: Date.now() + i,
@@ -825,15 +883,17 @@
       }
 
       showArea(areaId) {
+        document.getElementById('pLanding').style.display = 'none';
+        document.getElementById('pAppContainer').style.display = 'block';
         document.querySelectorAll('#pAppContainer > div').forEach(area => {
           area.style.display = 'none';
         });
         document.getElementById(areaId).style.display = 'block';
-        document.getElementById('pLanding').style.display = 'none';
         this.updateDisplays();
       }
 
       updateClientDisplay() {
+        if (!this.currentClient) return;
         document.getElementById('pClientName').textContent = this.currentClient.name;
         document.getElementById('pClientSessionInfo').textContent = `ID: ${this.currentClient.id}`;
         document.getElementById('pClientBalance').textContent = `${this.currentClient.balance.toLocaleString()} AOA`;
@@ -842,6 +902,7 @@
       }
 
       updateUserDisplay() {
+        if (!this.currentUser) return;
         document.getElementById('pUserName').textContent = this.currentUser.name;
         document.getElementById('pUserSessionInfo').textContent = `ID: ${this.currentUser.id}`;
         document.getElementById('pUserBalance').textContent = `${this.currentUser.balance.toLocaleString()} AOA`;
@@ -859,15 +920,14 @@
             </div>
             <span class="p-status p-status-${c.status}">${c.status === 'active' ? 'Ativa' : 'Concluída'}</span>
           </div>
-        `).join('');
+        `).join('') || '<div style="text-align:center;opacity:0.5;">Nenhuma campanha ativa</div>';
       }
 
       renderClientPayments() {
-        // Simulate payments
         document.getElementById('pClientPayments').innerHTML = `
           <div class="p-list-item">
-            <div>Campanha #123 • 15/01/2026</div>
-            <div>-2.500 AOA</div>
+            <div>Saldo Inicial • Boas-vindas</div>
+            <div style="color: var(--p-success);">+0 AOA</div>
           </div>
         `;
       }
@@ -922,9 +982,9 @@
       }
 
       updateDisplays() {
-        if (this.isAdmin) {
-          this.renderAdminDisplay();
-        }
+        if (this.isAdmin) this.renderAdminDisplay();
+        if (this.currentClient) this.updateClientDisplay();
+        if (this.currentUser) this.updateUserDisplay();
       }
 
       renderAdminDisplay() {
@@ -980,7 +1040,10 @@
       }
 
       updatePasswordStrength(input) {
-        const strength = document.getElementById(input.id.replace('Password', 'PasswordStrength'));
+        const strengthId = input.id + 'Strength';
+        const strength = document.getElementById(strengthId);
+        if (!strength) return;
+
         const val = input.value;
         let score = 0;
         if (val.length >= 6) score++;
@@ -990,6 +1053,8 @@
         if (/[^a-zA-Z\d]/.test(val)) score++;
 
         strength.className = 'p-password-strength';
+        if (val.length === 0) return;
+        
         if (score <= 2) strength.classList.add('p-password-weak');
         else if (score <= 3) strength.classList.add('p-password-medium');
         else strength.classList.add('p-password-strong');
@@ -1003,7 +1068,9 @@
         this.currentUser = null;
         this.currentClient = null;
         this.isAdmin = false;
+        localStorage.removeItem('premiumSocialSession');
         this.showLanding();
+        this.showToast('Sessão encerrada.', 'info');
       }
 
       saveData() {
@@ -1014,18 +1081,21 @@
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
+        const icon = type === 'success' ? '✅' : (type === 'error' ? '❌' : '⚠️');
         toast.innerHTML = `
-          <span>${type === 'success' ? '✅' : '❌'}</span>
+          <span>${icon}</span>
           <span>${message}</span>
         `;
         container.appendChild(toast);
-        setTimeout(() => toast.remove(), 5000);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(20px)';
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
       }
     }
 
-    // Initialize App
     const pApp = new PremiumSocialApp();
   </script>
 </body>
 </html>
-
