@@ -1,0 +1,3 @@
+# Proteção contra listagem
+exclude:
+  - .nojekyll
