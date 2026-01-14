@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Social - Ganhe Dinheiro Real</title>
+  <meta name="description" content="Ganhe dinheiro promovendo redes sociais. Clientes compram seguidores e engajamento, você executa tarefas e recebe pagamento.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --p-primary: #6366f1;
+      --p-secondary: #a855f7;
+      --p-bg: #0f172a;
+      --p-card: rgba(30, 41, 59, 0.95);
+      --p-text: #f8fafc;
+      --p-success: #10b981;
+      --p-warning: #f59e0b;
+      --p-error: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: linear-gradient(135deg, var(--p-bg), #1e293b); 
+      color: var(--p-text);
+      min-height: 100vh;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--p-card);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      animation: slideIn 0.3s ease-out;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toast.success { border-left: 4px solid var(--p-success); }
+    .toast.error { border-left: 4px solid var(--p-error); }
+    .toast.warning { border-left: 4px solid var(--p-warning); }
+
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Modal Login */
+    .p-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      backdrop-filter: blur(10px);
+    }
+    .p-modal.hidden { display: none; }
+    .p-modal-content {
+      background: var(--p-card);
+      padding: 48px;
+      border-radius: 24px;
+      width: 90%;
+      max-width: 420px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+    }
+    .p-modal h3 { text-align: center; margin-bottom: 32px; font-size: 1.8rem; }
+    .p-register-link {
+      text-align: center;
+      margin-top: 24px;
+      color: var(--p-primary);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* Landing */
+    .p-landing { min-height: 100vh; display: flex; flex-direction: column; }
+    .p-hero {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.1)), var(--p-bg);
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .p-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--p-primary), var(--p-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+    }
+    .p-hero p { 
+      font-size: 1.3rem; 
+      color: #94a3b8; 
+      margin-bottom: 48px; 
+      max-width: 700px; 
+      margin-left: auto; 
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .p-hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .p-access-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      padding: 80px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .p-access-card {
+      background: var(--p-card);
+      padding: 48px 32px;
+      border-radius: 24px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.4s;
+      cursor: pointer;
+      backdrop-filter: blur(20px);
+    }
+    .p-access-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+      border-color: var(--p-primary);
+    }
+    .p-access-icon { font-size: 5rem; margin-bottom: 24px; }
+    .p-access-card h3 { font-size: 1.8rem; margin-bottom: 18px; }
+    .p-access-card p { color: #94a3b8; line-height: 1.6; }
+
+    /* App */
+    .p-app-container { display: none; min-height: 100vh; padding: 20px; }
+    .p-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 48px;
+      padding: 32px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .p-header h2 { font-size: 2.2rem; }
+    .p-balance { 
+      font-size: 1.8rem; 
+      font-weight: 800; 
+      color: var(--p-success);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 16px 24px;
+      border-radius: 16px;
+    }
+    .p-session-info {
+      background: rgba(99, 102, 241, 0.1);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      margin-left: 16px;
+    }
+
+    .p-card {
+      background: var(--p-card);
+      padding: 40px;
+      border-radius: 24px;
+      margin-bottom: 32px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+    }
+    .p-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .p-form-group { margin-bottom: 24px; }
+    .p-label { display: block; font-weight: 600; margin-bottom: 8px; color: #94a3b8; }
+    .p-input, .p-select, .p-textarea {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    .p-textarea { resize: vertical; min-height: 100px; }
+    .p-input:focus, .p-select:focus, .p-textarea:focus {
+      outline: none;
+      border-color: var(--p-primary);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+    .p-password-strength {
+      height: 4px;
+      border-radius: 2px;
+      margin-top: 8px;
+      transition: all 0.3s;
+    }
+    .p-password-weak { background: var(--p-error); width: 25%; }
+    .p-password-medium { background: var(--p-warning); width: 50%; }
+    .p-password-strong { background: var(--p-success); width: 100%; }
+
+    .p-btn {
+      padding: 16px 32px;
+      border: none;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .p-btn-primary { 
+      background: linear-gradient(45deg, var(--p-primary), var(--p-secondary)); 
+      color: white; 
+    }
+    .p-btn-success { background: linear-gradient(45deg, var(--p-success), #059669); color: white; }
+    .p-btn-secondary { 
+      background: rgba(255,255,255,0.1); 
+      color: white; 
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .p-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+    .p-tasks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 28px;
+    }
+    .p-task-card, .p-campaign-item {
+      background: rgba(255,255,255,0.03);
+      padding: 32px;
+      border-radius: 20px;
+      border-left: 5px solid var(--p-primary);
+      transition: all 0.3s;
+    }
+    .p-task-card:hover { transform: translateX(8px); }
+    .p-campaign-item:hover { background: rgba(99, 102, 241, 0.1); }
+
+    .p-status {
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-block;
+    }
+    .p-status.available { background: rgba(16, 185, 129, 0.2); color: var(--p-success); }
+    .p-status.active { background: rgba(99, 102, 241, 0.2); color: var(--p-primary); }
+    .p-status.completed { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+
+    .p-list { max-height: 500px; overflow-y: auto; }
+    .p-list-item {
+      padding: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .p-list-item:last-child { border-bottom: none; }
+
+    .p-error-message {
+      color: var(--p-error);
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: none;
+    }
+    .p-error-message.show { display: block; }
+
+    .p-admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .p-admin-table th, .p-admin-table td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .p-admin-table th {
+      background: rgba(99, 102, 241, 0.2);
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .p-hero-buttons { flex-direction: column; align-items: center; }
+      .p-form-grid { grid-template-columns: 1fr; }
+      .p-tasks-grid { grid-template-columns: 1fr; }
+      .p-header { flex-direction: column; gap: 20px; text-align: center; }
+      .p-modal-content { padding: 32px 24px; margin: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Login Modals -->
+  <!-- Client Login -->
+  <div id="pClientLoginModal" class="p-modal">
+    <div class="p-modal-content">
+      <h3>👨‍💼 Login Cliente</h3>
+      <form id="clientLoginForm" onsubmit="pApp.loginClient(event)">
+        <div class="p-form-group">
+          <label class="p-label">Email</label>
+          <input class="p-input" id="clientEmail" type="email" placeholder="seu@email.com" required>
+        </div>
+        <div class="p-form-group">
+          <label class="p-label">Senha</label>
+          <input class="p-input" id="clientPassword" type="password" placeholder="••••••••" required>
+          <div class="p-password-strength" id="clientPasswordStrength"></div>
+        </div>
+        <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Entrar</button>
+      </form>
+      <div class="p-register-link" onclick="pApp.showClientRegister()">Não tem conta? Criar conta</div>
+    </div>
+  </div>
+
+  <!-- Client Register -->
+  <div id="pClientRegisterModal" class="p-modal hidden">
+    <div class="p-modal-content">
+      <h3>👨‍💼 Criar Conta Cliente</h3>
+      <form id="clientRegisterForm" onsubmit="pApp.registerClient(event)">
+        <div class="p-form-group">
+          <label class="p-label">Email</label>
+          <input class="p-input" id="clientRegEmail" type="email" placeholder="seu@email.com" required>
+        </div>
+        <div class="p-form-group">
+          <label class="p-label">Senha</label>
+          <input class="p-input" id="clientRegPassword" type="password" placeholder="••••••••" required minlength="6">
+          <div class="p-password-strength" id="clientRegPasswordStrength"></div>
+        </div>
+        <button type="submit" class="p-btn p-btn-success" style="width: 100%;">Criar Conta</button>
+      </form>
+      <div class="p-register-link" onclick="pApp.showClientLogin()">Já tem conta? Fazer login</div>
+    </div>
+  </div>
+
+  <!-- User Login -->
+  <div id="pUserLoginModal" class="p-modal">
+    <div class="p-modal-content">
+      <h3>👤 Login Usuário</h3>
+      <form id="userLoginForm" onsubmit="pApp.loginUser(event)">
+        <div class="p-form-group">
+          <label class="p-label">Email</label>
+          <input class="p-input" id="userEmail" type="email" placeholder="seu@email.com" required>
+        </div>
+        <div class="p-form-group">
+          <label class="p-label">Senha</label>
+          <input class="p-input" id="userPassword" type="password" placeholder="••••••••" required>
+          <div class="p-password-strength" id="userPasswordStrength"></div>
+        </div>
+        <button type="submit" class="p-btn p-btn-primary" style="width: 100%;">Entrar</button>
+      </form>
+      <div class="p-register-link" onclick="pApp.showUserRegister()">Não tem conta? Criar conta</div>
+    </div>
+  </div>
+
+  <!-- User Register -->
+  <div id="pUserRegisterModal" class="p-modal hidden">
+    <div class="p-modal-content">
+      <h3>👤 Criar Conta Usuário</h3>
+      <form id="userRegisterForm" onsubmit="pApp.registerUser(event)">
+        <div class="p-form-group">
+          <label class="p-label">Email</label>
+          <input class="p-input" id="userRegEmail" type="email" placeholder="seu@email.com" required>
+        </div>
+        <div class="p-form-group">
+          <label class="p-label">Senha</label>
+          <input class="p-input" id="userRegPassword" type="password" placeholder="••••••••" required minlength="6">
+          <div class="p-password-strength" id="userRegPasswordStrength"></div>
+        </div>
+        <button type="submit" class="p-btn p-btn-success" style="width: 100%;">Criar Conta</button>
+      </form>
+      <div class="p-register-link" onclick="pApp.showUserLogin()">Já tem conta? Fazer login</div>
+    </div>
+  </div>
+
+  <!-- Landing Page -->
+  <div class="p-landing" id="pLanding">
+    <section class="p-hero">
+      <h1>💎 Premium Social</h1>
+      <p><strong>Ganhe dinheiro real</strong> promovendo redes sociais. Clientes compram seguidores e engajamento, você executa as tarefas e recebe <strong>pagamento imediato</strong>.</p>
+      
+      <div class="p-hero-buttons">
+        <button class="p-btn p-btn-primary" onclick="pApp.showClientLogin()">
+          👨‍💼 Área Cliente
+        </button>
+        <button class="p-btn p-btn-success" onclick="pApp.showUserLogin()">
+          👤 Área Usuário (Ganhe $)
+        </button>
+        <button class="p-btn p-btn-secondary" onclick="pApp.showAdminLogin()">
+          ⚙️ Administração
+        </button>
+      </div>
+
+      <div style="opacity: 0.7; font-size: 0.95rem;">
+        Plataforma 100% funcional • Dados salvos localmente • Teste agora mesmo!
+      </div>
+    </section>
+
+    <div class="p-access-grid">
+      <div class="p-access-card" onclick="pApp.showClientLogin()">
+        <div class="p-access-icon">👨‍💼</div>
+        <h3>Área Cliente</h3>
+        <p>Crie campanhas profissionais de <strong>seguidores e engajamento</strong> para Facebook, Instagram, YouTube e TikTok com preços automáticos.</p>
+      </div>
+      
+      <div class="p-access-card" onclick="pApp.showUserLogin()">
+        <div class="p-access-icon">💰</div>
+        <h3>Área Usuário</h3>
+        <p>Execute tarefas simples e <strong>ganhe 25-50 AOA por ação</strong>. Saldo disponível para saque imediato após aprovação.</p>
+      </div>
+      
+      <div class="p-access-card" onclick="pApp.showAdminLogin()">
+        <div class="p-access-icon">⚙️</div>
+        <h3>Administração</h3>
+        <p>Gerencie clientes, aprove tarefas concluídas e acompanhe <strong>estatísticas em tempo real</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Container -->
+  <div class="p-app-container" id="pAppContainer">
+    <!-- Client Area -->
+    <div id="pClientArea" style="display: none;">
+      <div class="p-header">
+        <div>
+          <h2>👨‍💼 Área Cliente</h2>
+          <div id="pClientName"></div>
+          <div id="pClientSessionInfo" class="p-session-info"></div>
+        </div>
+        <div>
+          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Voltar</button>
+          <div class="p-balance">
+            <div style="font-size: 1rem; opacity: 0.8;">Saldo</div>
+            <div id="pClientBalance">0 AOA</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <h3>📈 Criar Nova Campanha</h3>
+        <form class="p-form-grid" id="campaignForm" onsubmit="pApp.createCampaign(event)">
+          <div class="p-form-group">
+            <label class="p-label">Plataforma</label>
+            <select class="p-select" id="pCampaignPlatform" required>
+              <option value="">Selecione...</option>
+              <option value="facebook">📘 Facebook</option>
+              <option value="instagram">📷 Instagram</option>
+              <option value="youtube">📺 YouTube</option>
+              <option value="tiktok">🎵 TikTok</option>
+            </select>
+          </div>
+          <div class="p-form-group">
+            <label class="p-label">Tipo</label>
+            <select class="p-select" id="pCampaignType" required>
+              <option value="seguidores">👥 Seguidores</option>
+              <option value="engajamento">❤️ Engajamento</option>
+            </select>
+          </div>
+          <div class="p-form-group">
+            <label class="p-label">Quantidade</label>
+            <input class="p-input" id="pCampaignQuantity" type="number" min="1" max="10000" placeholder="Ex: 500" required>
+            <div class="p-error-message" id="qtyError"></div>
+          </div>
+          <div class="p-form-group">
+            <label class="p-label">Preço Total</label>
+            <input class="p-input" id="pCampaignPrice" type="text" readonly style="font-weight: 700; font-size: 1.1rem;">
+          </div>
+          <button type="submit" class="p-btn p-btn-primary" style="grid-column: 1/-1;">
+            🚀 Criar Campanha
+          </button>
+        </form>
+      </div>
+
+      <div class="p-card">
+        <h3>📋 Minhas Campanhas (<span id="pCampaignsCount">0</span>)</h3>
+        <div class="p-list" id="pCampaignsList"></div>
+      </div>
+    </div>
+
+    <!-- User Area -->
+    <div id="pUserArea" style="display: none;">
+      <div class="p-header">
+        <div>
+          <h2>👤 Área Usuário</h2>
+          <div id="pUserNameDisplay"></div>
+          <div id="pUserSessionInfo" class="p-session-info"></div>
+        </div>
+        <div>
+          <button class="p-btn p-btn-secondary" onclick="pApp.logout()" style="margin-right: 12px;">← Voltar</button>
+          <div class="p-balance">
+            <div style="font-size: 1rem; opacity: 0.8;">Saldo Disponível</div>
+            <div id="pUserSaldo">0 AOA</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card" style="text-align: center; background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));">
+        <h3 style="color: var(--p-success);">💰 Saldo para Saque</h3>
+        <div id="pUserBalanceDisplay" style="font-size: 3rem; font-weight: 800; color: var(--p-success); margin: 16px 0;">0 AOA</div>
+        <button class="p-btn p-btn-success" onclick="pApp.withdrawBalance()" style="font-size: 1.1rem;">
+          💸 Sacar Saldo (mín. 500 AOA)
+        </button>
+      </div>
+
+      <div class="p-card">
+        <h3>📋 Tarefas Disponíveis (<span id="pTasksCount">0</span>)</h3>
+        <div class="p-tasks-grid" id="pUserTasksList"></div>
+      </div>
+    </div>
+
+    <!-- Admin Area -->
+    <div id="pAdminArea" style="display: none;">
+      <div class="p-header">
+        <div>
+          <h2>⚙️ Painel Admin</h2>
+          <div id="pAdminSessionInfo" class="p-session-info"></div>
+        </div>
+        <button class="p-btn p-btn-secondary" onclick="pApp.logout()">← Sair</button>
+      </div>
+
+      <div class="p-card">
+        <h3>📊 Estatísticas Gerais</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+          <div>
+            <p style="color: #94a3b8; margin-bottom: 8px;">Total Clientes</p>
+            <p style="font-size: 2rem; font-weight: 800;" id="adminTotalClients">0</p>
+          </div>
+          <div>
+            <p style="color: #94a3b8; margin-bottom: 8px;">Total Usuários</p>
+            <p style="font-size: 2rem; font-weight: 800;" id="adminTotalUsers">0</p>
+          </div>
+          <div>
+            <p style="color: #94a3b8; margin-bottom: 8px;">Campanhas Ativas</p>
+            <p style="font-size: 2rem; font-weight: 800;" id="adminActiveCampaigns">0</p>
+          </div>
+          <div>
+            <p style="color: #94a3b8; margin-bottom: 8px;">Tarefas Concluídas</p>
+            <p style="font-size: 2rem; font-weight: 800;" id="adminCompletedTasks">0</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <h3>👥 Usuários Ativos</h3>
+        <table class="p-admin-table" id="adminUsersTable">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Saldo</th>
+              <th>Tarefas</th>
+              <th>IP/Sessão</th>
+              <th>Criado</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="p-card">
+        <h3>👨‍💼 Clientes</h3>
+        <table class="p-admin-table" id="adminClientsTable">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Saldo</th>
+              <th>Campanhas</th>
+              <th>IP/Sessão</th>
+              <th>Criado</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // CONFIGURAÇÃO CENTRALIZADA
+    // ============================================
+    const CONFIG = {
+      ADMIN_CREDENTIALS: {
+        username: 'admin2026',
+        password: '@Angola2026#'
+      },
+      CAMPAIGN_PRICES: {
+        facebook: { seguidores: 100, engajamento: 30 },
+        instagram: { seguidores: 100, engajamento: 30 },
+        youtube: { seguidores: 100, engajamento: 150 },
+        tiktok: { seguidores: 150, engajamento: 200 }
+      },
+      TASK_REWARDS: {
+        facebook: { seguir: 50, engajamento: 50 },
+        instagram: { seguir: 50, engajamento: 50 },
+        youtube: { seguir: 50, engajamento: 25 },
+        tiktok: { seguir: 50, engajamento: 50 }
+      },
+      MIN_WITHDRAWAL: 500,
+      MAX_CAMPAIGN_QTY: 10000,
+      MIN_CAMPAIGN_QTY: 1,
+      MIN_PASSWORD_LENGTH: 6
+    };
+
+    // ============================================
+    // GERENCIADOR DE ACESSO E SESSÃO
+    // ============================================
+    class AccessManager {
+      static getClientIP() {
+        return `IP_${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
+      }
+
+      static getSessionId() {
+        return `SESSION_${Utils.generateId('sess')}`;
+      }
+
+      static validateSession(sessionData) {
+        if (!sessionData) return false;
+        // Valida se sessão não expirou (24h)
+        const now = Date.now();
+        return (now - sessionData.createdAt) < 86400000;
+      }
+    }
+
+    // ============================================
+    // UTILITÁRIOS (atualizado)
+    // ============================================
+    class Utils {
+      static validateEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      }
+
+      static generateId(prefix = 'id') {
+        return `${prefix}_${Math.random().toString(36).substr(2, 9)}_${Date.now()}`;
+      }
+
+      static hashPassword(password) {
+        // Hash simples para demo (em produção usar bcrypt ou Argon2)
+        return btoa(password + 'PREMIUM_SALT_2026');
+      }
+
+      static verifyPassword(password, hashed) {
+        return this.hashPassword(password) === hashed;
+      }
+
+      static escapeHTML(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      static debounce(func, delay = 300) {
+        let timeoutId;
+        return (...args) => {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => func.apply(this, args), delay);
+        };
+      }
+
+      static getPasswordStrength(password) {
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (/[a-z]/.test(password)) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^a-zA-Z0-9]/.test(password)) strength++;
+        return strength;
+      }
+    }
+
+    // Resto das classes permanecem iguais...
+    class Validators {
+      static validateCampaign(platform, type, qty, price, clientBalance) {
+        const errors = [];
+        if (!platform || !type) errors.push('Plataforma e tipo são obrigatórios');
+        if (!Number.isInteger(qty) || qty < CONFIG.MIN_CAMPAIGN_QTY || qty > CONFIG.MAX_CAMPAIGN_QTY) {
+          errors.push(`Quantidade deve estar entre ${CONFIG.MIN_CAMPAIGN_QTY} e ${CONFIG.MAX_CAMPAIGN_QTY}`);
+        }
+        if (price <= 0) errors.push('Preço deve ser positivo');
+        if (clientBalance < price) errors.push('Saldo insuficiente para criar esta campanha');
+        return { valid: errors.length === 0, errors };
+      }
+
+      static validateWithdrawal(balance) {
+        if (balance < CONFIG.MIN_WITHDRAWAL) {
+          return { valid: false, error: `Saque mínimo: ${CONFIG.MIN_WITHDRAWAL} AOA` };
+        }
+        return { valid: true, error: null };
+      }
+
+      static validatePassword(password) {
+        if (password.length < CONFIG.MIN_PASSWORD_LENGTH) {
+          return { valid: false, error: `Senha deve ter pelo menos ${CONFIG.MIN_PASSWORD_LENGTH} caracteres` };
+        }
+        return { valid: true, error: null };
+      }
+    }
+
+    class DataManager {
+      constructor() {
+        this.storageKey = 'p_social_data_v3';
+        this.data = this.loadData();
+      }
+
+      loadData() {
+        try {
+          const stored = localStorage.getItem(this.storageKey);
+          return stored ? JSON.parse(stored) : this.getDefaultData();
+        } catch (error) {
+          console.error('Erro ao carregar dados:', error);
+          return this.getDefaultData();
+        }
+      }
+
+      getDefaultData() {
+        return { 
+          clients: [], 
+          users: [], 
+          campaigns: [], 
+          tasks: [],
+          sessions: []
+        };
+      }
+
+      saveData() {
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.data));
+          return true;
+        } catch (error) {
+          console.error('Erro ao salvar dados:', error);
+          return false;
+        }
+      }
+
+      findClientByEmail(email) {
+        return this.data.clients.find(c => c.email === email) || null;
+      }
+
+      findUserByEmail(email) {
+        return this.data.users.find(u => u.email === email) || null;
+      }
+
+      findClientByCredentials(email, password) {
+        const client = this.findClientByEmail(email);
+        if (!client) return null;
+        return Utils.verifyPassword(password, client.passwordHash) ? client : null;
+      }
+
+      findUserByCredentials(email, password) {
+        const user = this.findUserByEmail(email);
+        if (!user) return null;
+        return Utils.verifyPassword(password, user.passwordHash) ? user : null;
+      }
+
+      createClient(email, password) {
+        if (this.findClientByEmail(email)) {
+          throw new Error('Cliente já existe');
+        }
+        const client = {
+          id: Utils.generateId('client'),
+          email,
+          passwordHash: Utils.hashPassword(password),
+          balance: 0,
+          campaigns: [],
+          ipAddress: AccessManager.getClientIP(),
+          sessions: [],
+          created: new Date().toISOString()
+        };
+        this.data.clients.push(client);
+        return client;
+      }
+
+      createUser(email, password) {
+        if (this.findUserByEmail(email)) {
+          throw new Error('Usuário já existe');
+        }
+        const user = {
+          id: Utils.generateId('user'),
+          email,
+          passwordHash: Utils.hashPassword(password),
+          balance: 0,
+          tasksCompleted: 0,
+          ipAddress: AccessManager.getClientIP(),
+          sessions: [],
+          created: new Date().toISOString()
+        };
+        this.data.users.push(user);
+        return user;
+      }
+
+      createSession(userId, type) {
+        const session = {
+          id: AccessManager.getSessionId(),
+          userId,
+          type, // 'client', 'user', 'admin'
+          ipAddress: AccessManager.getClientIP(),
+          userAgent: navigator.userAgent,
+          createdAt: Date.now(),
+          lastActivity: Date.now()
+        };
+        this.data.sessions.push(session);
+        
+        // Adiciona à lista de sessões do usuário
+        const user = this.getUserById(userId);
+        if (user) {
+          if (!user.sessions) user.sessions = [];
+          user.sessions.push(session.id);
+        }
+        
+        this.saveData();
+        return session;
+      }
+
+      getUserById(id) {
+        return [...this.data.clients, ...this.data.users].find(u => u.id === id) || null;
+      }
+    }
+
+    // UIController permanece igual...
+    class UIController {
+      static showToast(message, type = 'success', duration = 3000) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `<span>${Utils.escapeHTML(message)}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.animation = 'slideIn 0.3s ease-out reverse';
+          setTimeout(() => toast.remove(), 300);
+        }, duration);
+      }
+
+      static showFieldError(elementId, message) {
+        const errorEl = document.getElementById(elementId);
+        if (errorEl) {
+          errorEl.textContent = message;
+          errorEl.classList.add('show');
+        }
+      }
+
+      static clearFieldError(elementId) {
+        const errorEl = document.getElementById(elementId);
+        if (errorEl) {
+          errorEl.classList.remove('show');
+          errorEl.textContent = '';
+        }
+      }
+
+      static updatePasswordStrength(inputId, strengthId) {
+        const input = document.getElementById(inputId);
+        const strengthEl = document.getElementById(strengthId);
+        if (input && strengthEl) {
+          const strength = Utils.getPasswordStrength(input.value);
+          strengthEl.className = 'p-password-strength';
+          if (strength >= 4) strengthEl.classList.add('p-password-strong');
+          else if (strength >= 2) strengthEl.classList.add('p-password-medium');
+          else strengthEl.classList.add('p-password-weak');
+        }
+      }
+
+      static createCampaignElement(campaign) {
+        const div = document.createElement('div');
+        div.className = 'p-campaign-item p-list-item';
+        const statusClass = campaign.remaining === 0 ? 'completed' : 'active';
+        const statusText = campaign.remaining === 0 ? '✅ Concluída' : `${campaign.remaining} pendentes`;
+        div.innerHTML = `
+          <div>
+            <strong>${Utils.escapeHTML(campaign.platform.toUpperCase())} - ${Utils.escapeHTML(campaign.type)}</strong><br>
+            <small>Restam: ${campaign.remaining}/${campaign.qty} | ${campaign.price.toLocaleString()} AOA</small>
+          </div>
+          <span class="p-status ${statusClass}">${statusText}</span>
+        `;
+        return div;
+      }
+
+      static createTaskElement(task) {
+        const div = document.createElement('div');
+        div.className = 'p-task-card';
+        div.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h4>${Utils.escapeHTML(task.platform.toUpperCase())}</h4>
+              <p><strong>${task.type === 'seguidores' ? '👥 Seguir' : '❤️ Engajar'}</strong></p>
+            </div>
+            <span class="p-status available">+${task.reward.toLocaleString()} AOA</span>
+          </div>
+          <button class="p-btn p-btn-success" style="width: 100%;" onclick="pApp.completeTask('${Utils.escapeHTML(task.id)}')">
+            ✅ Concluir Tarefa Agora
+          </button>
+        `;
+        return div;
+      }
+
+      static createAdminUserRow(user) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>${Utils.escapeHTML(user.email)}</strong></td>
+          <td>${user.balance.toLocaleString()} AOA</td>
+          <td>${user.tasksCompleted || 0} ${user.campaigns ? user.campaigns.length : 0}</td>
+          <td>${Utils.escapeHTML(user.ipAddress || 'N/A')}</td>
+          <td>${new Date(user.created).toLocaleDateString('pt-PT')}</td>
+        `;
+        return row;
+      }
+    }
+
+    // ============================================
+    // APLICAÇÃO PRINCIPAL (ATUALIZADA)
+    // ============================================
+    class PremiumSocial {
+      constructor() {
+        this.dataManager = new DataManager();
+        this.currentUser = null;
+        this.currentSession = null;
+        this.init();
+      }
+
+      init() {
+        this.attachEvents();
+      }
+
+      attachEvents() {
+        const debouncedUpdate = Utils.debounce(() => this.updateCampaignPrice(), 300);
+        document.getElementById('pCampaignPlatform').addEventListener('change', debouncedUpdate);
+        document.getElementById('pCampaignType').addEventListener('change', debouncedUpdate);
+        document.getElementById('pCampaignQuantity').addEventListener('input', debouncedUpdate);
+
+        // Password strength listeners
+        ['clientRegPassword', 'userRegPassword', 'clientPassword', 'userPassword'].forEach(id => {
+          const input = document.getElementById(id);
+          if (input) {
+            input.addEventListener('input', () => {
+              const strengthId = id.replace('Password', 'PasswordStrength');
+              UIController.updatePasswordStrength(id, strengthId);
+            });
+          }
+        });
+      }
+
+      // MODAIS DE LOGIN/REGISTRO
+      showClientLogin() {
+        document.getElementById('pClientLoginModal').classList.remove('hidden');
+        document.getElementById('pClientRegisterModal').classList.add('hidden');
+      }
+
+      showClientRegister() {
+        document.getElementById('pClientLoginModal').classList.add('hidden');
+        document.getElementById('pClientRegisterModal').classList.remove('hidden');
+      }
+
+      showUserLogin() {
+        document.getElementById('pUserLoginModal').classList.remove('hidden');
+        document.getElementById('pUserRegisterModal').classList.add('hidden');
+      }
+
+      showUserRegister() {
+        document.getElementById('pUserLoginModal').classList.add('hidden');
+        document.getElementById('pUserRegisterModal').classList.remove('hidden');
+      }
+
+      showAdminLogin() {
+        const username = prompt('👤 Utilizador Admin:');
+        const password = prompt('🔐 Senha Admin:');
+        
+        if (username === CONFIG.ADMIN_CREDENTIALS.username && 
+            password === CONFIG.ADMIN_CREDENTIALS.password) {
+          this.currentUser = { id: 'admin', email: username, type: 'admin' };
+          this.currentSession = this.dataManager.createSession('admin', 'admin');
+          this.renderAdminArea();
+          this.showSection('pAdminArea');
+          UIController.showToast('✅ Acesso Admin concedido!', 'success');
+        } else {
+          UIController.showToast('❌ Credenciais inválidas!', 'error');
+        }
+      }
+
+      async loginClient(e) {
+        e.preventDefault();
+        const email = document.getElementById('clientEmail').value;
+        const password = document.getElementById('clientPassword').value;
+
+        if (!Utils.validateEmail(email)) {
+          UIController.showToast('Email inválido', 'error');
+          return;
+        }
+
+        const client = this.dataManager.findClientByCredentials(email, password);
+        if (!client) {
+          UIController.showToast('Cliente não encontrado ou senha incorreta', 'error');
+          return;
+        }
+
+        this.currentUser = client;
+        this.currentSession = this.dataManager.createSession(client.id, 'client');
+        this.renderClientArea();
+        this.closeAllModals();
+        this.showSection('pClientArea');
+        UIController.showToast(`Bem-vindo, ${client.email}!`, 'success');
+      }
+
+      async registerClient(e) {
+        e.preventDefault();
+        const email = document.getElementById('clientRegEmail').value;
+        const password = document.getElementById('clientRegPassword').value;
+
+        if (!Utils.validateEmail(email)) {
+          UIController.showToast('Email inválido', 'error');
+          return;
+        }
+
+        const validation = Validators.validatePassword(password);
+        if (!validation.valid) {
+          UIController.showToast(validation.error, 'error');
+          return;
+        }
+
+        try {
+          const client = this.dataManager.createClient(email, password);
+          this.currentUser = client;
+          this.currentSession = this.dataManager.createSession(client.id, 'client');
+          this.renderClientArea();
+          this.closeAllModals();
+          this.showSection('pClientArea');
+          UIController.showToast(`Conta criada com sucesso! Bem-vindo, ${client.email}`, 'success');
+        } catch (error) {
+          UIController.showToast(error.message, 'error');
+        }
+      }
+
+      async loginUser(e) {
+        e.preventDefault();
+        const email = document.getElementById('userEmail').value;
+        const password = document.getElementById('userPassword').value;
+
+        if (!Utils.validateEmail(email)) {
+          UIController.showToast('Email inválido', 'error');
+          return;
+        }
+
+        const user = this.dataManager.findUserByCredentials(email, password);
+        if (!user) {
+          UIController.showToast('Usuário não encontrado ou senha incorreta', 'error');
+          return;
+        }
+
+        this.currentUser = user;
+        this.currentSession = this.dataManager.createSession(user.id, 'user');
+        this.renderUserArea();
+        this.closeAllModals();
+        this.showSection('pUserArea');
+        UIController.showToast(`Bem-vindo, ${user.email}!`, 'success');
+      }
+
+      async registerUser(e) {
+        e.preventDefault();
+        const email = document.getElementById('userRegEmail').value;
+        const password = document.getElementById('userRegPassword').value;
+
+        if (!Utils.validateEmail(email)) {
+          UIController.showToast('Email inválido', 'error');
+          return;
+        }
+
+        const validation = Validators.validatePassword(password);
+        if (!validation.valid) {
+          UIController.showToast(validation.error, 'error');
+          return;
+        }
+
+        try {
+          const user = this.dataManager.createUser(email, password);
+          this.currentUser = user;
+          this.currentSession = this.dataManager.createSession(user.id, 'user');
+          this.renderUserArea();
+          this.closeAllModals();
+          this.showSection('pUserArea');
+          UIController.showToast(`Conta criada com sucesso! Bem-vindo, ${user.email}`, 'success');
+        } catch (error) {
+          UIController.showToast(error.message, 'error');
+        }
+      }
+
+      closeAllModals() {
+        document.querySelectorAll('.p-modal').forEach(modal => {
+          modal.classList.add('hidden');
+        });
+      }
+
+      // Demais métodos permanecem iguais...
+      updateCampaignPrice() {
+        const platform = document.getElementById('pCampaignPlatform').value;
+        const type = document.getElementById('pCampaignType').value;
+        const qty = parseInt(document.getElementById('pCampaignQuantity').value) || 0;
+        
+        UIController.clearFieldError('qtyError');
+        
+        if (platform && type && qty) {
+          const price = CONFIG.CAMPAIGN_PRICES[platform][type] * qty;
+          document.getElementById('pCampaignPrice').value = price.toLocaleString() + ' AOA';
+        }
+      }
+
+      renderClientArea() {
+        document.getElementById('pClientName').textContent = this.currentUser.email;
+        document.getElementById('pClientBalance').textContent = this.currentUser.balance.toLocaleString() + ' AOA';
+        document.getElementById('pClientSessionInfo').innerHTML = `
+          ID: ${this.currentSession.id.slice(-8)}<br>
+          IP: ${this.currentUser.ipAddress}
+        `;
+        this.renderCampaigns();
+      }
+
+      renderCampaigns() {
+        const campaigns = this.dataManager.data.campaigns.filter(c => c.clientId === this.currentUser.id);
+        document.getElementById('pCampaignsCount').textContent = campaigns.length;
+        const container = document.getElementById('pCampaignsList');
+        container.innerHTML = '';
+        campaigns.forEach(campaign => {
+          const element = UIController.createCampaignElement(campaign);
+          container.appendChild(element);
+        });
+      }
+
+      createCampaign(e) {
+        e.preventDefault();
+        const platform = document.getElementById('pCampaignPlatform').value;
+        const type = document.getElementById('pCampaignType').value;
+        const qty = parseInt(document.getElementById('pCampaignQuantity').value);
+        const priceText = document.getElementById('pCampaignPrice').value;
+        const price = parseInt(priceText.replace(/[^\d]/g, ''));
+
+        const validation = Validators.validateCampaign(platform, type, qty, price, this.currentUser.balance);
+        if (!validation.valid) {
+          UIController.showToast(validation.errors[0], 'error');
+          UIController.showFieldError('qtyError', validation.errors[0]);
+          return;
+        }
+
+        const campaign = {
+          id: Utils.generateId('campaign'),
+          clientId: this.currentUser.id,
+          platform, type, qty, price,
+          remaining: qty,
+          status: 'active',
+          created: new Date().toISOString()
+        };
+
+        this.dataManager.data.campaigns.push(campaign);
+        this.currentUser.balance -= price;
+        this.currentUser.campaigns.push(campaign.id);
+
+        for (let i = 0; i < qty; i++) {
+          this.dataManager.data.tasks.push({
+            id: Utils.generateId('task'),
+            campaignId: campaign.id,
+            platform, type,
+            status: 'available',
+            reward: CONFIG.TASK_REWARDS[platform][type === 'seguidores' ? 'seguir' : 'engajamento']
+          });
+        }
+
+        this.dataManager.saveData();
+        this.renderClientArea();
+        e.target.reset();
+        UIController.showToast(`✅ Campanha criada! ${qty} tarefas disponíveis.`, 'success');
+      }
+
+      renderUserArea() {
+        document.getElementById('pUserNameDisplay').textContent = this.currentUser.email;
+        document.getElementById('pUserSaldo').textContent = this.currentUser.balance.toLocaleString() + ' AOA';
+        document.getElementById('pUserBalanceDisplay').textContent = this.currentUser.balance.toLocaleString() + ' AOA';
+        document.getElementById('pUserSessionInfo').innerHTML = `
+          ID: ${this.currentSession.id.slice(-8)}<br>
+          IP: ${this.currentUser.ipAddress}
+        `;
+        this.renderUserTasks();
+      }
+
+      renderUserTasks() {
+        const tasks = this.dataManager.data.tasks.filter(t => t.status === 'available');
+        document.getElementById('pTasksCount').textContent
+
+document.getElementById('pTasksCount').textContent = tasks.length;
+        const container = document.getElementById('pUserTasksList');
+        container.innerHTML = '';
+        tasks.forEach(task => {
+          const element = UIController.createTaskElement(task);
+          container.appendChild(element);
+        });
+      }
+
+      completeTask(taskId) {
+        const task = this.dataManager.data.tasks.find(t => t.id === taskId);
+        if (!task || task.status !== 'available') {
+          UIController.showToast('Tarefa não disponível', 'error');
+          return;
+        }
+
+        const campaign = this.dataManager.data.campaigns.find(c => c.id === task.campaignId);
+        if (!campaign) {
+          UIController.showToast('Campanha não encontrada', 'error');
+          return;
+        }
+
+        // Marca tarefa como concluída
+        task.status = 'completed';
+        task.completedAt = new Date().toISOString();
+        campaign.remaining--;
+
+        // Verifica se campanha terminou
+        if (campaign.remaining <= 0) {
+          campaign.status = 'completed';
+        }
+
+        // Credita recompensa ao usuário
+        this.currentUser.balance += task.reward;
+        this.currentUser.tasksCompleted = (this.currentUser.tasksCompleted || 0) + 1;
+
+        this.dataManager.saveData();
+        this.renderUserArea();
+        UIController.showToast(`✅ Tarefa concluída! +${task.reward} AOA`, 'success');
+      }
+
+      withdrawBalance() {
+        const validation = Validators.validateWithdrawal(this.currentUser.balance);
+        if (!validation.valid) {
+          UIController.showToast(validation.error, 'error');
+          return;
+        }
+
+        this.currentUser.balance = 0;
+        this.dataManager.saveData();
+        this.renderUserArea();
+        UIController.showToast('💸 Saque solicitado com sucesso!', 'success');
+      }
+
+      renderAdminArea() {
+        this.renderAdminStats();
+        this.renderAdminUsers();
+        this.renderAdminClients();
+      }
+
+      renderAdminStats() {
+        document.getElementById('adminTotalClients').textContent = this.dataManager.data.clients.length;
+        document.getElementById('adminTotalUsers').textContent = this.dataManager.data.users.length;
+        document.getElementById('adminActiveCampaigns').textContent = 
+          this.dataManager.data.campaigns.filter(c => c.status === 'active').length;
+        document.getElementById('adminCompletedTasks').textContent = 
+          this.dataManager.data.tasks.filter(t => t.status === 'completed').length;
+      }
+
+      renderAdminUsers() {
+        const users = [...this.dataManager.data.users, ...this.dataManager.data.clients];
+        const tbody = document.querySelector('#adminUsersTable tbody');
+        tbody.innerHTML = '';
+        users.forEach(user => {
+          tbody.appendChild(UIController.createAdminUserRow(user));
+        });
+      }
+
+      renderAdminClients() {
+        const tbody = document.querySelector('#adminClientsTable tbody');
+        tbody.innerHTML = '';
+        this.dataManager.data.clients.forEach(client => {
+          tbody.appendChild(UIController.createAdminUserRow(client));
+        });
+      }
+
+      showSection(sectionId) {
+        document.getElementById('pLanding').style.display = 'none';
+        document.getElementById('pAppContainer').style.display = 'block';
+        document.querySelectorAll('#pAppContainer > div').forEach(div => {
+          div.style.display = 'none';
+        });
+        document.getElementById(sectionId).style.display = 'block';
+      }
+
+      logout() {
+        this.currentUser = null;
+        this.currentSession = null;
+        document.getElementById('pAppContainer').style.display = 'none';
+        document.getElementById('pLanding').style.display = 'flex';
+        UIController.showToast('👋 Até logo!', 'success');
+      }
+    }
+
+    // ============================================
+    // INICIALIZAÇÃO
+    // ============================================
+    const pApp = new PremiumSocial();
+
+    // Form handlers globais
+    document.getElementById('campaignForm').onsubmit = (e) => pApp.createCampaign(e);
+    document.getElementById('clientLoginForm').onsubmit = (e) => pApp.loginClient(e);
+    document.getElementById('userLoginForm').onsubmit = (e) => pApp.loginUser(e);
+    document.getElementById('clientRegisterForm').onsubmit = (e) => pApp.registerClient(e);
+    document.getElementById('userRegisterForm').onsubmit = (e) => pApp.registerUser(e);
+  </script>
+</body>
+</html>
